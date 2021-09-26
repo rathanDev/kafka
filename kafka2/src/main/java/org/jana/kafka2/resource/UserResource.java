@@ -1,6 +1,5 @@
 package org.jana.kafka2.resource;
 
-
 import org.jana.kafka2.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -18,7 +17,7 @@ public class UserResource {
 
     private static final String USER_TOPIC = "user-topic";
 
-    @GetMapping("/publish/{message}")
+    @GetMapping("/publish/{name}")
     public String postUser(@PathVariable("name") final String name) {
         kafkaTemplate.send(USER_TOPIC, new User(name, "IT"));
         return "User message published successfully";
