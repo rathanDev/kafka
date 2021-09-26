@@ -1,5 +1,7 @@
 package org.jana.kafka2.resource;
 
+
+import org.jana.kafka2.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,18 +10,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/kafka")
-public class KafkaResource {
+@RequestMapping("/user")
+public class UserResource {
 
     @Autowired
-    KafkaTemplate<String, String> kafkaTemplate;
+    KafkaTemplate<String, User> kafkaTemplate;
 
-    private static final String TOPIC = "kafka-topic";
+    private static final String USER_TOPIC = "user-topic";
 
     @GetMapping("/publish/{message}")
-    public String post(@PathVariable("message") final String message) {
-        kafkaTemplate.send(TOPIC, message);
-        return "Published successfully";
+    public String postUser(@PathVariable("name") final String name) {
+        kafkaTemplate.send(USER_TOPIC, new User(name, "IT"));
+        return "User message published successfully";
     }
 
 }
